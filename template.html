@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{title}} — ZAKKI</title>
+  <meta name="description" content="{{description}}" />
+  <meta name="author" content="ZAKI" />
+
+  <!-- 🧠 SEO & SNS meta -->
+  <meta property="og:title" content="{{title}} — ZAKKI" />
+  <meta property="og:description" content="{{description}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{url}}" />
+  <meta property="og:site_name" content="ZAKKI" />
+  <meta property="og:image" content="https://zakki.blog/ogimages/{{slug}}.png" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{title}} — ZAKKI">
+  <meta name="twitter:description" content="{{description}}">
+  <meta name="twitter:image" content="https://zakki.blog/ogimages/{{slug}}.png">
+
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-gradient: linear-gradient(180deg, #102a4d 0%, #274c77 100%);
+      --fg:#e9f1ff; --muted:#a7bfdc; --accent:#8bb6ff; --accent-warm:#f2a65a;
+      --card:#0f2447cc; --border:#284a7a; --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --maxw: 860px; --radius:16px; --radius-sm:12px;
+      --code-bg: #0c1f3f; --code-bd:#2a4b7f;
+      --link:#9ac4ff; --link-h:#cfe3ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:Inter,"Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; color:var(--fg);
+      background: var(--bg-gradient);
+      line-height:1.85; letter-spacing:.2px}
+    a{color:var(--link);text-decoration:none} a:hover{color:var(--link-h); text-decoration:underline}
+
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+    header{position:sticky; top:0; z-index:10; backdrop-filter: blur(8px);
+      background:rgba(16,42,77,0.8); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{font-weight:800; letter-spacing:1px}
+    .crumbs{font-size:13px; color:var(--muted)}
+    .crumbs a{color:var(--muted)}
+
+    .hero{padding:28px 0 6px}
+    h1.title{font-size:34px; line-height:1.15; margin:8px 0 6px}
+    .meta{display:flex; gap:12px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:13px}
+    .tag{display:inline-block; padding:4px 10px; border:1px solid rgba(255,255,255,.18); border-radius:999px; font-size:12px; background:rgba(255,255,255,.06)}
+
+    article{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; margin:16px 0 28px}
+    article h2{font-size:24px; margin:26px 0 10px; color:#dfeaff}
+    article h3{font-size:18px; margin:20px 0 8px; color:#dfeaff}
+    article p{margin:.8em 0}
+    article ul,article ol{padding-left:1.5em}
+    blockquote{margin:14px 0; padding:10px 14px; border-left:3px solid var(--accent); background:rgba(255,255,255,.06); border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+    figure{margin:16px 0;}
+    figure img{max-width:100%; border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow)}
+    figcaption{font-size:13px; color:var(--muted); margin-top:6px}
+
+    footer{margin:22px 0 40px; color:var(--muted); font-size:13px; text-align:center}
+  </style>
+</head>
+<body>
+  <!-- 本文などは省略 -->
+</body>
+</html>
