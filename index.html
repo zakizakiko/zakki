@@ -25,15 +25,15 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0;
-  font-family:Inter,"Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,
-    "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-  color:var(--fg);
-  background:
-    radial-gradient(1200px 800px at 70% -10%, rgba(255,255,255,0.03), transparent 60%),
-    linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 100%);
-  line-height:1.7; letter-spacing:.2px;
+body {
+  margin: 0;
+  font-family: Inter, "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto,
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  color: var(--fg);
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  background-attachment: fixed; /* ← グラデの伸びを安定させる */
+  line-height: 1.7;
+  letter-spacing: .2px;
 }
 
 /* Links */

@@ -7,18 +7,18 @@
   <meta name="description" content="{{description}}" />
   <meta name="author" content="ZAKI" />
 
-  <!-- 🧠 SEO & SNS meta (プレースホルダは下のスクリプトで置換) -->
+  <!-- 🧠 SEO & SNS meta -->
   <meta property="og:title" content="{{title}} — ZAKKI" />
   <meta property="og:description" content="{{description}}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="{{url}}" />
   <meta property="og:site_name" content="ZAKKI" />
-  <meta property="og:image" content="/ogimages/{{slug}}.png" />
+  <meta property="og:image" content="https://zakki.blog/ogimages/{{slug}}.png" />
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{title}} — ZAKKI">
   <meta name="twitter:description" content="{{description}}">
-  <meta name="twitter:image" content="/ogimages/{{slug}}.png">
+  <meta name="twitter:image" content="https://zakki.blog/ogimages/{{slug}}.png">
 
   <!-- favicon -->
   <link rel="icon" type="image/png" href="/favicon.png" />
@@ -29,7 +29,6 @@
 
   <style>
     :root{
-      /* 一括グラデーション（夕景ブルー） */
       --bg-gradient: linear-gradient(180deg, #102a4d 0%, #274c77 100%);
       --fg:#e9f1ff; --muted:#a7bfdc; --accent:#8bb6ff; --accent-warm:#f2a65a;
       --card:#0f2447cc; --border:#284a7a; --shadow: 0 10px 30px rgba(0,0,0,.35);
@@ -40,12 +39,7 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0; font-family:Inter,"Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; color:var(--fg);
-      background: #142a4a; /* 単色（夕景の深い青） */
-      /* アンチバンディングの微細テクスチャ（不要なら削除） */
-      background-image:
-        radial-gradient(1400px 900px at 70% -10%, rgba(255,255,255,0.04), transparent 60%),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+      background: var(--bg-gradient);
       line-height:1.85; letter-spacing:.2px}
     a{color:var(--link);text-decoration:none} a:hover{color:var(--link-h); text-decoration:underline}
 
@@ -72,230 +66,10 @@
     figure img{max-width:100%; border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow)}
     figcaption{font-size:13px; color:var(--muted); margin-top:6px}
 
-    .tablewrap{overflow:auto; border:1px solid var(--border); border-radius:12px}
-    table{width:100%; border-collapse:collapse; min-width:560px}
-    th,td{padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.08)}
-    thead th{background:rgba(255,255,255,.06); text-align:left}
-
-    pre{background:var(--code-bg); border:1px solid var(--code-bd); border-radius:12px; padding:14px; overflow:auto; position:relative}
-    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-    .copy{position:absolute; top:8px; right:8px; font-size:12px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25); padding:4px 8px; border-radius:8px; cursor:pointer}
-
-    .callout{border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); border-radius:12px; padding:12px 14px; margin:14px 0}
-    .callout.info{border-color:#5f8ec4}
-    .callout.warn{border-color:#f2a65a}
-    .callout.success{border-color:#76b6a7}
-
-    .toc{background:rgba(255,255,255,.05); border:1px dashed rgba(255,255,255,.18); border-radius:12px; padding:14px; margin:12px 0}
-    .toc h3{margin:0 0 8px; font-size:14px; color:#dfeaff}
-    .toc ul{list-style:none; margin:0; padding:0}
-    .toc li{margin:6px 0}
-
-    .post-end{display:grid; gap:16px}
-    @media(min-width:860px){ .post-end{grid-template-columns: 1fr 1fr} }
-    .author{display:flex; gap:12px; align-items:flex-start; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:14px}
-    .avatar{width:56px; height:56px; border-radius:999px; background:linear-gradient(135deg, #294e7d, #10274b); border:2px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-weight:800}
-    .share{background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:14px}
-    .share a{margin-right:10px}
-
     footer{margin:22px 0 40px; color:var(--muted); font-size:13px; text-align:center}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <div class="brand"><a href="/">ZAKKI</a></div>
-      <nav class="crumbs">
-        <a href="/">Home</a> ／ <a href="/categories/{{category}}">{{categoryLabel}}</a> ／ <span>{{title}}</span>
-      </nav>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <section class="hero">
-      <div class="meta">
-        <span>🗓 {{date}}</span>
-        <span>·</span>
-        <span>⏱ 読了目安：{{readingTime}}分</span>
-        <span>·</span>
-        <span class="tag">{{categoryLabel}}</span>
-        <span class="tag">{{tag1}}</span>
-        <span class="tag">{{tag2}}</span>
-      </div>
-      <h1 class="title">{{title}}</h1>
-      <p class="muted">{{subtitle}}</p>
-    </section>
-
-    <aside class="toc" id="toc">
-      <h3>目次</h3>
-      <ul></ul>
-    </aside>
-
-    <article id="post">
-      <h2>はじめに</h2>
-      <p>この記事では、{{shortIntro}}。</p>
-
-      <h2>背景</h2>
-      <p>{{background}}</p>
-
-      <h2>方法 / 手順</h2>
-      <p>{{methodsIntro}}</p>
-      <ol>
-        <li>{{step1}}</li>
-        <li>{{step2}}</li>
-        <li>{{step3}}</li>
-      </ol>
-
-      <h3>コード例</h3>
-      <pre><button class="copy" data-target="code-1">copy</button><code id="code-1">python
-import numpy as np
-print("Hello ZAKKI")
-</code></pre>
-
-      <h2>結果 / 考察</h2>
-      <p>{{findings}}</p>
-      <blockquote>メモ：結論を先に書く → 根拠 → 例 → 余白（次の課題）。</blockquote>
-
-      <figure>
-        <img src="{{imageUrl}}" alt="{{imageAlt}}">
-        <figcaption>{{imageCaption}}</figcaption>
-      </figure>
-
-      <div class="tablewrap">
-        <table>
-          <thead>
-            <tr><th>項目</th><th>値</th><th>メモ</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>A</td><td>0.82</td><td>例：CV平均R²</td></tr>
-            <tr><td>B</td><td>±0.04</td><td>例：標準偏差</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2>まとめ</h2>
-      <ul>
-        <li>{{summary1}}</li>
-        <li>{{summary2}}</li>
-        <li>{{summary3}}</li>
-      </ul>
-
-      <div class="callout info">💡 次に読む：<a href="{{related1url}}">{{related1}}</a></div>
-      <div class="callout warn">⚠ 注意点：{{caution}}</div>
-      <div class="callout success">✅ ダウンロード：<a href="{{assetUrl}}">{{assetName}}</a></div>
-    </article>
-
-    <section class="post-end">
-      <div class="author">
-        <div class="avatar" aria-hidden="true">ZK</div>
-        <div>
-          <strong>ZAKI</strong>
-          <p class="muted">京都大学大学院／神経変性疾患の医用画像解析（NDM/ESM/SuStaIn）。U26女子ブリッジ日本代表。創作はマダミス/RPG/ロゴなど。</p>
-          <p><a href="/about">もっと見る →</a></p>
-        </div>
-      </div>
-      <div class="share">
-        <strong>Share</strong>
-        <p>
-          <a href="https://twitter.com/intent/tweet?text={{title}}&url={{url}}" target="_blank" rel="noopener">Xに共有</a>
-          <a href="https://b.hatena.ne.jp/add?mode=confirm&url={{url}}&title={{title}}" target="_blank" rel="noopener">はてブ</a>
-          <a href="mailto:?subject={{title}}&body={{url}}">メール</a>
-        </p>
-      </div>
-    </section>
-
-    <footer>
-      <p>© 2025 ZAKKI — <a href="/">トップへ戻る</a></p>
-    </footer>
-  </main>
-
-  <script>
-    // --- 簡易テンプレ置換（プレーンHTMLでも動く） ---
-    // ★ デモ値：そのままでも見栄えするように既定値を入れています。
-    const POST = {
-      title: 'Network Diffusion Modelでみるパーキンソン病の萎縮進行',
-      description: '脳ネットワーク上の拡散モデルでPDの萎縮パターンを読む実験メモ',
-      url: window.location.href,
-      slug: 'ndm-parkinson',
-      category: 'research',
-      categoryLabel: '研究',
-      date: '2025-10-12',
-      readingTime: '7',
-      subtitle: '拡散定数・結合重み・境界条件の感度を小規模データで検証',
-      tag1: 'NDM',
-      tag2: 'Neuroimaging',
-      shortIntro: 'Network Diffusion Model(NDM)の前提・実装・評価の要点を整理します',
-      background: 'NDMは連結行列に対する熱方程式類似の時間発展を仮定し…',
-      methodsIntro: '今回はシンプルなラプラシアン拡散を用い、結合は機能/構造connectomeで…',
-      step1: '前処理：Z-score正規化と接続行列のスケーリング',
-      step2: 'パラメタ探索：βのグリッドサーチとCV',
-      step3: '評価：予測萎縮マップと観測の相関',
-      findings: '小標本でもβの安定域が見える。半球非対称に関する追加検討が必要。',
-      imageUrl: '/assets/images/sample-ndm.png',
-      imageAlt: 'NDMの概念図',
-      imageCaption: 'Fig.1 拡散の時間発展イメージ（ダミー）',
-      summary1: 'βは0.015〜0.03で指標が安定',
-      summary2: '構造connectomeのほうが説明力が高い傾向',
-      summary3: '半球差と基底核周辺の例外値は追加分析へ',
-      related1: 'ENIGMA toolboxの可視化：罠と回避メモ',
-      related1url: '/article/enigma-visualization.html',
-      caution: '患者/対照の年齢分布を完全一致させていないため、交絡の可能性あり',
-      assetUrl: '/assets/files/ndm-notes.pdf',
-      assetName: '補足PDF（実験メモ）'
-    };
-
-    // {{var}} をテキスト/属性に展開
-    function replacePlaceholders(root=document){
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
-      const texts = [];
-      while (walker.nextNode()) texts.push(walker.currentNode);
-      texts.forEach(node => {
-        node.nodeValue = node.nodeValue.replace(/{{(\w+)}}/g, (_, k) => POST[k] ?? '');
-      });
-      // head内のmetaやlinkのcontent/srcも置換
-      document.querySelectorAll('meta, link').forEach(el => {
-        for (const attr of ['content','href']){
-          if(el.hasAttribute(attr)){
-            el.setAttribute(attr, el.getAttribute(attr).replace(/{{(\w+)}}/g, (_,k)=> POST[k] ?? ''));
-          }
-        }
-      });
-      // パンくずのカテゴリURL
-      const cat = document.querySelector('.crumbs a[href^="/categories/"]');
-      if(cat) cat.setAttribute('href', `/categories/${POST.category}`);
-    }
-    replacePlaceholders();
-
-    // 目次自動生成（h2/h3）
-    (function(){
-      const toc = document.querySelector('#toc ul');
-      const headings = document.querySelectorAll('#post h2, #post h3');
-      if(!toc || headings.length===0) return;
-      headings.forEach(h => {
-        if(!h.id){h.id = h.textContent.trim().replace(/\s+/g,'-').toLowerCase()}
-        const li = document.createElement('li');
-        li.style.marginLeft = h.tagName === 'H3' ? '14px' : '0';
-        const a = document.createElement('a'); a.href = `#${h.id}`; a.textContent = h.textContent; li.appendChild(a); toc.appendChild(li);
-      })
-    })();
-
-    // コードコピー
-    document.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.copy'); if(!btn) return;
-      const id = btn.getAttribute('data-target');
-      const code = document.getElementById(id);
-      if(!code) return;
-      const text = code.innerText;
-      if(navigator.clipboard){
-        navigator.clipboard.writeText(text).then(()=>{ btn.textContent='copied!'; setTimeout(()=>btn.textContent='copy', 1200); });
-      } else {
-        // HTTPSでないとクリップボードが使えない環境向けフォールバック
-        const ta = document.createElement('textarea');
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); btn.textContent='copied!'; } catch(e){}
-        document.body.removeChild(ta); setTimeout(()=>btn.textContent='copy', 1200);
-      }
-    });
-  </script>
+  <!-- 本文などは省略 -->
 </body>
 </html>
