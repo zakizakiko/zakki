@@ -22,6 +22,17 @@
   --border:#2b3658;
   --shadow:0 18px 40px rgba(0,0,0,.5);
   --radius:16px; --radius-sm:12px; --maxw:1100px;
+  /* Heroをスクロールでフェード＆わずかに下へ */
+  .hero{
+    will-change: opacity, transform;
+    transition: opacity .2s linear, transform .2s ease-out; /* スクロールがない時の見栄え */
+  }
+
+  /* モーション弱め希望の人には静止表示 */
+  @media (prefers-reduced-motion: reduce){
+    .hero{ transition: none !important; }
+  }
+
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -338,5 +349,50 @@ footer{
   </footer>
 
   <a class="top" href="#hero" aria-label="ページ上部へ">↑ Top</a>
+<script>
+(function(){
+  const hero = document.querySelector('.hero');
+  const header = document.querySelector('.header');
+  if(!hero) return;
+
+  // ユーザーが「動きを減らす」設定ならエフェクト無効
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ hero.style.opacity = 1; hero.style.transform = 'none'; return; }
+
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY || window.pageYOffset;
+    const h = hero.offsetHeight || 1;
+    // heroの高さ分のスクロールに合わせて 1 → 0.4 へフェード
+    const p = Math.min(Math.max(y / h, 0), 1);          // 0..1
+    const opacity = 1 - p * 0.6;                        // 1 → 0.4
+    const translate = p * 24;                            // 0 → 24px
+
+    hero.style.opacity = opacity.toFixed(3);
+    hero.style.transform = `translateY(${translate}px)`;
+
+    // スクロールが進むほどヘッダーを少しだけ濃く
+    if(header){
+      const top = 0.75 + p * 0.15;  // 0.75 → 0.90
+      const bot = 0.40 + p * 0.20;  // 0.40 → 0.60
+      header.style.background =
+        `linear-gradient(180deg, rgba(10,10,22,${top}), rgba(10,10,22,${bot}))`;
+    }
+    ticking = false;
+  }
+
+  function onScroll(){
+    if(!ticking){
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  // 初期化
+  update();
+})();
+</script>
 </body>
 </html>
