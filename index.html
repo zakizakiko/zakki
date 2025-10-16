@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZAKKI — 研究・創作・ブリッジの交差点</title>
+  <meta name="description" content="ZAKKI｜研究・創作・ブリッジ・就活・雑記を横断する個人ブログのトップページ。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* 夕方のやや青みがかった世界（夕焼けの青） */
+      --bg-deep:#0b1d3a;   /* 群青の深み */
+      --bg-mid:#183a5b;    /* 薄暮の青 */
+      --bg-sky:#274c77;    /* 夕空の青 */
+      --fg:#e9f1ff;        /* 月光のような淡い文字色 */
+      --muted:#a7bfdc;     /* 補助テキスト */
+      --accent:#8bb6ff;    /* 冷たいアクセント（星の瞬き） */
+      --accent-warm:#f2a65a; /* 夕日オレンジ（差し色） */
+      --card:#0f2447cc;    /* 半透明カード */
+      --card-hover:#132c54cc;
+      --border:#284a7a;
+      --chip-research:#7ea6e0;
+      --chip-creative:#f2a65a;
+      --chip-bridge:#9fd3c7;
+      --chip-career:#c8a1ff;
+      --chip-misc:#a7bfdc;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --maxw: 1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color:var(--fg);
+      background: radial-gradient(1200px 800px at 70% -10%, rgba(255,255,255,0.06), transparent 60%),
+                  linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 45%, var(--bg-sky) 100%);
+      line-height:1.65;
+      letter-spacing:0.2px;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(11,29,58,0.85), rgba(11,29,58,0.35));
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+    .nav{max-width:var(--maxw); margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between}
+    .brand{font-weight:800; letter-spacing:1px; font-size:20px}
+    .menu{display:flex; gap:18px; align-items:center}
+    .menu a{color:var(--fg); opacity:0.9}
+    .menu a:hover{opacity:1}
+    .cta{padding:8px 14px; background:var(--accent-warm); color:#16202e; border-radius:999px; font-weight:700}
+    .cta:hover{text-decoration:none; filter:brightness(1.05)}
+
+    /* Hero */
+    .hero{max-width:var(--maxw); margin:0 auto; padding:72px 20px 28px; text-align:center}
+    .hero h1{font-size:56px; line-height:1.05; margin:0 0 12px; letter-spacing:0.5px}
+    .hero p{margin:0 auto 22px; max-width:720px; color:var(--muted)}
+    .chips{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px}
+    .chip{padding:8px 12px; border-radius:999px; font-size:14px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.06)}
+    .chip[data-t="research"]{background:rgba(126,166,224,0.15); border-color:#5f8ec4}
+    .chip[data-t="creative"]{background:rgba(242,166,90,0.16); border-color:#c78949}
+    .chip[data-t="bridge"]{background:rgba(159,211,199,0.14); border-color:#76b6a7}
+    .chip[data-t="career"]{background:rgba(200,161,255,0.16); border-color:#a382db}
+    .chip[data-t="misc"]{background:rgba(167,191,220,0.16); border-color:#7e97b2}
+
+    /* Sections */
+    .section{max-width:var(--maxw); margin:0 auto; padding:32px 20px}
+    .section h2{font-size:22px; letter-spacing:0.6px; font-weight:700; margin:0 0 14px; color:#dfeaff}
+    .muted{color:var(--muted); font-size:14px}
+
+    /* Cards */
+    .grid{display:grid; gap:18px}
+    @media (min-width: 760px){ .grid{grid-template-columns: repeat(3, 1fr);} }
+    @media (min-width: 1040px){ .grid{gap:22px} }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .card:hover{ transform: translateY(-2px); background:var(--card-hover); border-color:#356199 }
+    .badge{display:inline-flex; align-items:center; gap:6px; font-size:12px; opacity:0.9}
+    .dot{width:8px; height:8px; border-radius:50%}
+    .badge[data-t="research"] .dot{background:var(--chip-research)}
+    .badge[data-t="creative"] .dot{background:var(--chip-creative)}
+    .badge[data-t="bridge"] .dot{background:var(--chip-bridge)}
+    .badge[data-t="career"] .dot{background:var(--chip-career)}
+    .badge[data-t="misc"] .dot{background:var(--chip-misc)}
+    .date{font-size:12px; color:var(--muted)}
+    .title{font-weight:700; font-size:18px; line-height:1.35}
+    .excerpt{color:#cbd8ee; font-size:14px}
+    .readmore{margin-top:auto; font-weight:600}
+
+    /* Category blocks */
+    .catwrap{display:grid; gap:18px}
+    @media (min-width: 900px){ .catwrap{grid-template-columns: repeat(5, 1fr);} }
+    .cat{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border:1px dashed rgba(255,255,255,0.2);
+      border-radius:var(--radius-sm); padding:14px; min-height:148px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .cat h3{margin:0; font-size:16px}
+    .cat p{margin:0; font-size:13px; color:var(--muted)}
+    .cat a{font-size:13px; font-weight:600}
+
+    /* About */
+    .about{
+      display:grid; gap:22px; align-items:center;
+    }
+    @media (min-width: 860px){
+      .about{grid-template-columns: 160px 1fr}
+    }
+    .avatar{
+      width:120px; height:120px; border-radius:999px; background:linear-gradient(135deg, #294e7d, #10274b);
+      border:2px solid rgba(255,255,255,0.2); box-shadow: var(--shadow);
+      display:flex; align-items:center; justify-content:center; font-weight:800; font-size:28px; letter-spacing:1px;
+    }
+    .socials{display:flex; gap:12px; margin-top:8px}
+    .socials a{display:inline-flex; align-items:center; gap:6px; font-size:14px}
+
+    /* Footer */
+    footer{
+      margin-top:20px; border-top:1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(24,58,91,0.8), rgba(24,58,91,0.35));
+    }
+    .foot{max-width:var(--maxw); margin:0 auto; padding:24px 20px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; color:var(--muted)}
+    .top{position:fixed; right:18px; bottom:18px; background:var(--accent); color:#0b1d3a; padding:10px 14px; border-radius:999px; font-weight:800; box-shadow: var(--shadow)}
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <div class="brand">ZAKKI</div>
+      <div class="menu">
+        <a href="#latest">最新</a>
+        <a href="#categories">カテゴリ</a>
+        <a href="#about">About</a>
+        <a class="cta" href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <h1>ZAKKI</h1>
+      <p>研究・創作・ブリッジ・就活・雑記を横断する、わたしの思考ログ。夕暮れの青に、日々の発見を綴ります。</p>
+      <div class="chips">
+        <span class="chip" data-t="research">🧠 研究</span>
+        <span class="chip" data-t="creative">🎨 創作</span>
+        <span class="chip" data-t="bridge">🃏 ブリッジ</span>
+        <span class="chip" data-t="career">💼 就活</span>
+        <span class="chip" data-t="misc">🗒 雑記</span>
+      </div>
+    </section>
+
+    <!-- Latest -->
+    <section class="section" id="latest">
+      <h2>🔖 Latest Entries</h2>
+      <div class="grid">
+        <!-- Sample cards (置き換え可) -->
+        <article class="card">
+          <div class="badge" data-t="research"><span class="dot"></span>研究 ・ 2025-10-12</div>
+          <div class="title">Network Diffusion Modelでみるパーキンソン病の萎縮進行</div>
+          <p class="excerpt">脳ネットワーク上での異常拡散を仮定し、領域間連結性を重み付けに使った縦断解析の覚え書き…</p>
+          <a class="readmore" href="#">続きを読む →</a>
+        </article>
+        <article class="card">
+          <div class="badge" data-t="career"><span class="dot"></span>就活 ・ 2025-10-10</div>
+          <div class="title">医療機器 × AI の仕事研究：応募軸の棚卸し</div>
+          <p class="excerpt">画像診断・手術ナビ・遠隔医療の三本柱で見直したキャリア仮説と、現場価値の出し方…</p>
+          <a class="readmore" href="#">続きを読む →</a>
+        </article>
+        <article class="card">
+          <div class="badge" data-t="bridge"><span class="dot"></span>ブリッジ ・ 2025-10-08</div>
+          <div class="title">U26女子強化メモ：ディフェンスの合意と課題</div>
+          <p class="excerpt">シグナル運用の齟齬を減らすための優先順位付けと、実戦ボードからのエラーパターン…</p>
+          <a class="readmore" href="#">続きを読む →</a>
+        </article>
+        <article class="card">
+          <div class="badge" data-t="creative"><span class="dot"></span>創作 ・ 2025-10-05</div>
+          <div class="title">マーダーミステリー『8クラブ』：構造とエンディング分岐</div>
+          <p class="excerpt">“♠Q の誤誘導”を中心に、事件当日のタイムラインと各キャラの目的設計を整理…</p>
+          <a class="readmore" href="#">続きを読む →</a>
+        </article>
+        <article class="card">
+          <div class="badge" data-t="misc"><span class="dot"></span>雑記 ・ 2025-10-03</div>
+          <div class="title">月報：学期開始のドタバタと嬉しかったこと</div>
+          <p class="excerpt">進捗・読書・小さな勝ち。来月の注力テーマは“負荷の最適化”。</p>
+          <a class="readmore" href="#">続きを読む →</a>
+        </article>
+        <article class="card">
+          <div class="badge" data-t="research"><span class="dot"></span>研究 ・ 2025-09-28</div>
+          <div class="title">ENIGMA toolboxの可視化：罠と回避メモ</div>
+          <p class="excerpt">VTK依存・環境差・z-score前処理のポイントなど、次回自分用の覚え書き…</p>
+          <a class="readmore" href="#">続きを読む →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Categories overview -->
+    <section class="section" id="categories">
+      <h2>🗂 Categories</h2>
+      <div class="catwrap">
+        <div class="cat">
+          <h3>🧠 Research</h3>
+          <p>脳画像解析、拡散モデル、ENIGMA、SuStaIn/ESM/NDM。</p>
+          <a href="#">もっと見る →</a>
+        </div>
+        <div class="cat">
+          <h3>🎨 Creative</h3>
+          <p>マダミス、RPG世界観、ロゴ・UI、文章の実験。</p>
+          <a href="#">もっと見る →</a>
+        </div>
+        <div class="cat">
+          <h3>🃏 Bridge</h3>
+          <p>大会記録、戦術ノート、AI・アプリ開発メモ。</p>
+          <a href="#">もっと見る →</a>
+        </div>
+        <div class="cat">
+          <h3>💼 Career</h3>
+          <p>就活ログ、面接準備、イベント参加記、学びの要約。</p>
+          <a href="#">もっと見る →</a>
+        </div>
+        <div class="cat">
+          <h3>🗒 Misc</h3>
+          <p>ライフログ、月報、思考の断片。</p>
+          <a href="#">もっと見る →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <h2>👤 About</h2>
+      <div class="about">
+        <div class="avatar" aria-hidden="true">ZK</div>
+        <div>
+          <p><strong>ZAKI（山﨑那菜）</strong> — 京都大学大学院。神経変性疾患の医用画像解析（NDM/ESM/SuStaIn）を研究中。U26女子ブリッジ日本代表。創作はマダミス/RPG/ロゴなど。</p>
+          <div class="socials">
+            <a href="#">GitHub</a>
+            <a href="#">X</a>
+            <a href="#">Note</a>
+            <a href="#" id="contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <span>© 2025 ZAKKI</span>
+      <span>Designed by zakizaiko</span>
+    </div>
+  </footer>
+
+  <a class="top" href="#hero" aria-label="ページ上部へ">↑ Top</a>
+</body>
+</html>
