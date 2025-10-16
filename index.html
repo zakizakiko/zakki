@@ -229,7 +229,80 @@ footer{
   box-shadow:var(--shadow)
 }
 
-  </style>
+/* ===== ゆっくり呼吸する控えめネオンチップ ===== */
+.chips {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* ベース共通 */
+.chip {
+  position: relative;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.04);
+  cursor: default;
+  transition: color .3s ease, border-color .3s ease;
+  animation: softPulse 6s ease-in-out infinite;
+}
+
+/* 呼吸アニメーション：ゆっくり輝度を上下 */
+@keyframes softPulse {
+  0%, 100% {
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    filter: brightness(1.25) saturate(1.2);
+  }
+}
+
+/* 各カテゴリー色（完全一致で統一） */
+.chip[data-t="research"] {
+  color: #8bb6ff;
+  border: 1px solid #8bb6ff;
+  box-shadow: 0 0 10px rgba(139,182,255,0.25);
+  text-shadow: 0 0 8px rgba(139,182,255,0.3);
+}
+
+.chip[data-t="creative"] {
+  color: #f2a65a;
+  border: 1px solid #f2a65a;
+  box-shadow: 0 0 10px rgba(242,166,90,0.25);
+  text-shadow: 0 0 8px rgba(242,166,90,0.3);
+}
+
+.chip[data-t="bridge"] {
+  color: #9fd3c7;
+  border: 1px solid #9fd3c7;
+  box-shadow: 0 0 10px rgba(159,211,199,0.25);
+  text-shadow: 0 0 8px rgba(159,211,199,0.3);
+}
+
+.chip[data-t="career"] {
+  color: #c8a1ff;
+  border: 1px solid #c8a1ff;
+  box-shadow: 0 0 10px rgba(200,161,255,0.25);
+  text-shadow: 0 0 8px rgba(200,161,255,0.3);
+}
+
+.chip[data-t="misc"] {
+  color: #a7bfdc;
+  border: 1px solid #a7bfdc;
+  box-shadow: 0 0 10px rgba(167,191,220,0.25);
+  text-shadow: 0 0 8px rgba(167,191,220,0.3);
+}
+
+/* Hover時：少しだけ明るく（浮かない） */
+.chip:hover {
+  filter: brightness(1.3);
+}
+
+</style>
 </head>
 <body>
   <header class="header">
