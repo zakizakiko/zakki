@@ -33,14 +33,14 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-          background: #142a4a; /* 夕景の深い青・単色 */
-          background-image:
-          radial-gradient(1400px 900px at 70% -10%, rgba(255,255,255,0.04), transparent 60%),
-          repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
-          repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+    body/* body の背景と文字色を統一 */
+body{
+  color: var(--fg); /* これで黒に戻るのを防ぐ */
+  background: #1a3f6b; /* ちょい明るめの夕景ブルー */
+  background-image:
+    radial-gradient(1400px 900px at 70% -10%, rgba(255,255,255,0.04), transparent 60%);
+}
 
-    }
     a{color:var(--accent); text-decoration:none}
     a:hover{text-decoration:underline}
 
