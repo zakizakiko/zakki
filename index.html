@@ -34,13 +34,12 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family: Inter, "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-      color:var(--fg);
-      background: radial-gradient(1200px 800px at 70% -10%, rgba(255,255,255,0.06), transparent 60%),
-                  linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 45%, var(--bg-sky) 100%);
-      line-height:1.65;
-      letter-spacing:0.2px;
+          background: #142a4a; /* 夕景の深い青・単色 */
+          background-image:
+          radial-gradient(1400px 900px at 70% -10%, rgba(255,255,255,0.04), transparent 60%),
+          repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
+          repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+
     }
     a{color:var(--accent); text-decoration:none}
     a:hover{text-decoration:underline}
