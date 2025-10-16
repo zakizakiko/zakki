@@ -58,35 +58,82 @@ a:hover{text-decoration:underline}
 .cta:hover{filter:brightness(1.05)}
 
 /* Hero */
-.hero {
-  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%),
-              linear-gradient(180deg, rgba(26,15,31,0.65), rgba(15,27,46,0.85)),
-              url("/assets/images/hero-road.jpg") center/cover no-repeat;
+/* ===== Hero（中央スポットライト＆大見出し） ===== */
+.hero{
+  position:relative; overflow:hidden; text-align:center;
+  max-width: var(--maxw); margin: 0 auto;
+  padding: 96px 20px 48px;
+  background:
+    radial-gradient(800px 420px at 50% 45%, rgba(255,255,255,0.08) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(26,15,31,0.55), rgba(15,27,46,0.85)),
+    url("/assets/images/hero-road.jpg") center/cover no-repeat;
 }
 
+/* 画面幅限界まで大きい「ZAKKI」 */
 .hero h1{
-  font-size:clamp(48px,8vw,110px);
-  font-weight:900;
-  letter-spacing:.6px;
-  color:var(--accent-warm);
+  margin: 0 0 10px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  /* 画面幅ベースで最大化（1行想定） */
+  font-size: min(18vw, 12rem);
+  line-height: .9;
+  color: var(--accent-warm); /* ビビッドオレンジ */
   text-shadow:
-    0 3px 0 rgba(0,0,0,.4),
-    0 0 25px rgba(255,166,43,.3);
-  margin:0 0 14px;
+    0 3px 0 rgba(0,0,0,.45),
+    0 0 28px rgba(255,166,43,.32);
+  white-space: nowrap; /* 改行させない */
 }
-.hero p{
-  margin:0 auto 24px;
-  max-width:720px;
-  color:var(--muted);
-  font-size:17px;
-}
-.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+
+/* Heroの説明テキストは非表示（HTMLから削除でもOK） */
+.hero p{ display:none; }
+
+/* ===== カテゴリチップ（項目ごとに色分け） ===== */
+.chips{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px}
+
 .chip{
-  padding:8px 12px;border-radius:999px;font-size:14px;
+  padding:8px 12px; border-radius:999px; font-size:14px;
   border:1px solid rgba(255,255,255,0.15);
-  background:rgba(24,224,255,0.07);
-  color:var(--fg);
+  background: rgba(255,255,255,0.05);
+  color: var(--fg);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
+.chip:hover{ transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.25); }
+
+/* 個別カラー（最初の提案色に寄せて調整） */
+.chip[data-t="research"]{
+  background: rgba(126,166,224,0.15); border-color:#5f8ec4; color:#eaf2ff;
+}
+.chip[data-t="creative"]{
+  background: rgba(242,166,90,0.16); border-color:#c78949; color:#fff1e4;
+}
+.chip[data-t="bridge"]{
+  background: rgba(159,211,199,0.14); border-color:#76b6a7; color:#eafff8;
+}
+.chip[data-t="career"]{
+  background: rgba(200,161,255,0.16); border-color:#a382db; color:#f5ebff;
+}
+.chip[data-t="misc"]{
+  background: rgba(167,191,220,0.16); border-color:#7e97b2; color:#e9f1ff;
+}
+
+/* ===== 背景の“切れ目”対策（ページ全体） ===== */
+body {
+  margin: 0;
+  color: var(--fg);
+  background: linear-gradient(180deg, #1a0f1f 0%, #0f1b2e 100%);
+  background-attachment: fixed;
+}
+
+.hero {
+  position: relative;
+  text-align: center;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 120px 20px 60px;
+  /* 👇 hero独自の背景は削除または透明化 */
+  background: none;
+}
+
 
 /* Section blocks */
 .section{max-width:var(--maxw);margin:0 auto;padding:48px 20px}
@@ -222,9 +269,8 @@ footer{
           <p class="excerpt">Githubに公開されているpySuStaInのインストールから実装まで(underconstruction)</p>
           <a class="readmore" href="#">続きを読む →</a>
         </article>
-        
+
         -->
-        </article>
         <article class="card">
           <div class="badge" data-t="misc"><span class="dot"></span>雑記 ・ 2025-10-16</div>
           <div class="title">自己紹介</div>
