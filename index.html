@@ -58,15 +58,12 @@ a:hover{text-decoration:underline}
 .cta:hover{filter:brightness(1.05)}
 
 /* Hero */
-.hero{
-  position:relative;overflow:hidden;text-align:center;
-  max-width:var(--maxw);margin:0 auto;
-  padding:90px 20px 40px;
-  background:
-    linear-gradient(180deg,rgba(26,15,31,.65),rgba(15,27,46,.8)),
-    url("/assets/images/hero-road.jpg") center/cover no-repeat;
-  border-bottom:1px solid rgba(255,255,255,.06);
+.hero {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%),
+              linear-gradient(180deg, rgba(26,15,31,0.65), rgba(15,27,46,0.85)),
+              url("/assets/images/hero-road.jpg") center/cover no-repeat;
 }
+
 .hero h1{
   font-size:clamp(48px,8vw,110px);
   font-weight:900;
