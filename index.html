@@ -34,11 +34,14 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body/* body の背景と文字色を統一 */
-body{
-  color: var(--fg); /* これで黒に戻るのを防ぐ */
-  background: #1a3f6b; /* ちょい明るめの夕景ブルー */
-  background-image:
-    radial-gradient(1400px 900px at 70% -10%, rgba(255,255,255,0.04), transparent 60%);
+body {
+  margin: 0;
+  font-family: Inter, "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto,
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  color: #e9f1ff; /* 白文字 */
+  background: linear-gradient(180deg, #102a4d 0%, #274c77 100%); /* 夕方の青グラデーション */
+  line-height: 1.85;
+  letter-spacing: 0.2px;
 }
 
     a{color:var(--accent); text-decoration:none}
