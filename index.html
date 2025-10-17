@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZAKKI — 研究・創作・ブリッジの交差点</title>
-  <meta name="description" content="ZAKKI｜研究・創作・ブリッジ・就活・雑記を横断する個人ブログのトップページ。" />
+  <title>ZAKI ZAKKI</title>
+  <meta name="description" content="ZAKI ZAKKI｜いち京大生の日常と開発ノート" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -302,8 +302,174 @@ footer{
   filter: brightness(1.3);
 }
 
+/* ====== MENU（ヘッダの目次リンク）====== */
+.menu a{
+  position: relative;
+  color: var(--fg);
+  opacity: .9;
+  transition: opacity .2s ease, color .2s ease;
+}
+.menu a::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-4px; height:2px;
+  background: radial-gradient(8px 6px at 50% 50%, var(--accent), transparent);
+  opacity:0; transition: opacity .25s ease;
+}
+.menu a:hover{ color: var(--accent); opacity:1 }
+.menu a:hover::after{ opacity:.9 }
+
+/* ====== Contact（右上ボタン）====== */
+.cta{
+  --cta: var(--accent-warm, #ffa62b);
+  padding:8px 14px;
+  background: color-mix(in oklab, var(--cta) 18%, transparent);
+  color:#fff; /* ← 白文字に固定 */
+  border:1px solid color-mix(in oklab, var(--cta) 70%, #ffffff 0%);
+  border-radius:999px; font-weight:700;
+  box-shadow: 0 0 10px color-mix(in oklab, var(--cta) 35%, transparent);
+  transition: filter .25s ease, box-shadow .25s ease, border-color .25s ease;
+  animation: btnPulse 7s ease-in-out infinite;
+}
+/* === Topボタンの修正版 === */
+.top{
+  --top: var(--accent, #fff);
+  background: color-mix(in oklab, var(--top) 18%, #0f1b2e);
+  color:#fff; /* ← 白文字に変更 */
+  border:1px solid color-mix(in oklab, var(--top) 70%, #ffffff 0%);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--top) 35%, transparent);
+  transition: filter .25s ease, box-shadow .25s ease, border-color .25s ease;
+  animation: btnPulseTop 8s ease-in-out infinite;
+}
+/* hover時も白文字を維持 */
+.top:hover{
+  color:#fff;
+  filter: brightness(1.1);
+}
+
+/* ====== セクション見出し（Latest / Categories / About）====== */
+.section h2{
+  color: var(--accent);
+  position: relative;
+  padding-bottom: 4px;
+}
+.section h2::after{
+  content:"";
+  position:absolute; left:0; bottom:-6px;
+  width:72px; height:3px; border-radius:3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 40%, transparent);
+  opacity:.85;
+}
+
+/* ====== 記事カードの「続きを読む」リンクをネオン寄りに ====== */
+.readmore{
+  color: var(--accent);
+  text-decoration: none;
+  position: relative;
+}
+.readmore::after{
+  content:"";
+  position:absolute; left:0; bottom:-2px; right:0; height:1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity:.35; transition: opacity .25s ease;
+}
+.readmore:hover::after{ opacity:.85 }
+
+/* ====== SNS/ソーシャル小リンクも統一トーン ====== */
+.socials a{
+  color: var(--accent);
+  text-shadow: 0 0 6px color-mix(in oklab, var(--accent) 25%, transparent);
+  transition: text-shadow .25s ease, color .25s ease;
+}
+.socials a:hover{
+  color: var(--accent-warm);
+  text-shadow: 0 0 8px color-mix(in oklab, var(--accent-warm) 30%, transparent);
+}
+
+/* ====== “Latest...の目次”＝ヘッダの3リンクを少しゆっくり発光 ====== */
+.header .menu a{
+  animation: navGlow 9s ease-in-out infinite;
+}
+@keyframes navGlow{
+  0%,100%{ text-shadow: 0 0 3px rgba(24,224,255,.15) }
+  50%    { text-shadow: 0 0 8px rgba(24,224,255,.28) }
+}
+
+/* アニメ控えめ設定に配慮 */
+@media (prefers-reduced-motion: reduce){
+  .cta, .top, .header .menu a{ animation: none !important; }
+}
+
+/* 1) メニューの通常リンクだけをホバー変色にする（Contactは除外） */
+.menu a:not(.cta){ color: var(--fg); opacity: .9; }
+.menu a:not(.cta):hover{ color: var(--accent); opacity: 1; }
+
+/* 2) Contactは常に白文字（visited/hover/focus/activeも固定） */
+.menu .cta,
+.menu .cta:visited,
+.menu .cta:hover,
+.menu .cta:focus,
+.menu .cta:active{
+  color: #fff !important;
+  -webkit-text-fill-color: #fff; /* Safari保険 */
+  text-decoration: none;
+}
+
+/* 3) メニュー共通の下線グローをContactには出さない */
+.menu .cta::after{ content: none !important; }
+
+/* === Heroタイトル専用フォント === */
+.hero h1{
+  font-family: 'Orbitron', sans-serif;
+  font-size: min(18vw, 12rem);
+  letter-spacing: 0.06em;
+  line-height: .9;
+  color: var(--accent-warm);
+  /* 厚みを出す影を重ねる */
+  text-shadow:
+    0 0 4px rgba(255,166,43,0.7),
+    0 0 15px rgba(255,166,43,0.5),
+    0 0 40px rgba(255,166,43,0.25),
+    0 3px 0 rgba(0,0,0,0.45);
+  white-space: nowrap;
+  animation: titleGlow 9s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%,100% {
+    text-shadow:
+      0 0 4px rgba(255,166,43,0.7),
+      0 0 15px rgba(255,166,43,0.5),
+      0 0 40px rgba(255,166,43,0.25),
+      0 3px 0 rgba(0,0,0,0.45);
+  }
+  50% {
+    text-shadow:
+      0 0 10px rgba(255,166,43,0.8),
+      0 0 25px rgba(255,166,43,0.6),
+      0 0 60px rgba(255,166,43,0.35),
+      0 3px 0 rgba(0,0,0,0.45);
+  }
+}
+
+.hero h2{
+  margin-top: 8px;
+  font-family: 'Inter', 'Noto Sans JP', sans-serif; /* 無機質で細め */
+  font-weight: 400;  /* 細く、軽やかに */
+  font-size: min(4vw, 1.5rem);
+  letter-spacing: 0.05em; /* やや広めで清潔感 */
+  color: var(--muted);    /* 淡いブルーグレー */
+  text-shadow: none;      /* グローを排除してシャープに */
+  opacity: 0.9;
+}
+
+
+
 </style>
 </head>
+<!--フォントの指定-->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
 <body>
   <header class="header">
     <nav class="nav">
@@ -321,19 +487,19 @@ footer{
     <!-- Hero -->
     <section class="hero" id="hero">
       <h1>ZAKKI</h1>
-      <p>研究・創作・ブリッジ・就活・雑記を横断する、わたしの思考ログ。夕暮れの青に、日々の発見を綴ります。</p>
+      <h2>いち京大生の日常と開発ノート</h2>
       <div class="chips">
-        <span class="chip" data-t="research">🧠 研究</span>
-        <span class="chip" data-t="creative">🎨 創作</span>
-        <span class="chip" data-t="bridge">🃏 ブリッジ</span>
-        <span class="chip" data-t="career">💼 就活</span>
-        <span class="chip" data-t="misc">🗒 雑記</span>
+        <span class="chip" data-t="research">🧠 Research</span>
+        <span class="chip" data-t="creative">🎨 Creative</span>
+        <span class="chip" data-t="bridge">🃏 Bridge</span>
+        <span class="chip" data-t="career">💼 Career</span>
+        <span class="chip" data-t="misc">🗒 Misc</span>
       </div>
     </section>
 
     <!-- Latest -->
     <section class="section" id="latest">
-      <h2>🔖 Latest Entries</h2>
+      <h2>Latest Entries</h2>
       <div class="grid">
         <!-- Sample cards (置き換え可) -->
         <!--data-tには、research、career、bridge、creative、miscが入ります。-->>
@@ -366,30 +532,30 @@ footer{
 
     <!-- Categories overview -->
     <section class="section" id="categories">
-      <h2>🗂 Categories</h2>
+      <h2>Categories</h2>
       <div class="catwrap">
         <div class="cat">
-          <h3>🧠 Research</h3>
+          <h3>Research</h3>
           <p>脳画像解析、SuStaIn、NDM、ENIGMA TOOLBOX。</p>
           <a href="template.html">もっと見る →</a>
         </div>
         <div class="cat">
-          <h3>🎨 Creative</h3>
-          <p>開発ノート、写真、イラスト、作曲</p>
+          <h3>Creative</h3>
+          <p>開発ノート、写真、イラスト、作曲。</p>
           <a href="template.html">もっと見る →</a>
         </div>
         <div class="cat">
-          <h3>🃏 Bridge</h3>
-          <p>大会記録や感想、システムに関するメモ</p>
+          <h3>Bridge</h3>
+          <p>大会記録や感想、システムに関するメモ。</p>
           <a href="template.html">もっと見る →</a>
         </div>
         <div class="cat">
-          <h3>💼 Career</h3>
+          <h3>Career</h3>
           <p>就活ログ、面接準備、イベント参加記、学びの要約。</p>
           <a href="template.html">もっと見る →</a>
         </div>
         <div class="cat">
-          <h3>🗒 Misc</h3>
+          <h3>Misc</h3>
           <p>ライフログ、月報、思考の断片。</p>
           <a href="template.html">もっと見る →</a>
         </div>
@@ -402,7 +568,7 @@ footer{
       <div class="about">
         <div class="avatar" aria-hidden="true">ZK</div>
         <div>
-          <p><strong>zakizakiko</strong> — 京都大学大学院。神経変性疾患の医用画像解析を研究中。</p>
+          <p><strong>zakizakiko</strong> — 京都大学大学院医学研究科在学。神経変性疾患患者の脳における萎縮拡大をシミュレーションする研究を行なっている。趣味：ゲーム、コントラクトブリッジ、料理、散歩。</p>
           <div class="socials">
             <a href="#">GitHub</a>
             <a href="#">X</a>
@@ -417,7 +583,7 @@ footer{
   <footer>
     <div class="foot">
       <span>© 2025 ZAKKI</span>
-      <span>Designed by zakizaiko</span>
+      <span>Designed by zakizakiko</span>
     </div>
   </footer>
 
