@@ -5,471 +5,292 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZAKI ZAKKI</title>
   <meta name="description" content="ZAKI ZAKKI｜いち京大生の日常と開発ノート" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Inter / Noto Sans JP + Orbitron for H1 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+
   <style>
-    :root{
-  /* 🎨 Neon Noire palette */
-  --bg-1:#1a0f1f;    /* 暗い紫（上） */
-  --bg-2:#0f1b2e;    /* 夜の群青（下） */
-  --fg:#f5f7ff;      /* 白文字 */
-  --muted:#b6bcd3;   /* 補助文字 */
-  --accent:#18e0ff;  /* ネオンシアン */
-  --accent-warm:#ffa62b; /* ビビッドオレンジ */
-  --card:rgba(18,20,36,0.75);
-  --card-hover:rgba(28,32,52,0.9);
-  --border:#2b3658;
-  --shadow:0 18px 40px rgba(0,0,0,.5);
-  --radius:16px; --radius-sm:12px; --maxw:1100px;
-  /* Heroをスクロールでフェード＆わずかに下へ */
+  /* ========================
+     ZAKKI - Top (unified to article tone)
+     ======================== */
+
+  :root{
+    /* 🎨 Neon Noire palette */
+    --bg-1:#1a0f1f;    /* 暗い紫（上） */
+    --bg-2:#0f1b2e;    /* 夜の群青（下） */
+    --fg:#f5f7ff;      /* 本文色 */
+    --muted:#b6bcd3;   /* 補助文字 */
+    --accent:#18e0ff;  /* ネオンシアン */
+    --accent-warm:#ffa62b; /* ネオンオレンジ */
+
+    --card:rgba(18,20,36,0.75);
+    --card-hover:rgba(28,32,52,0.9);
+    --border:#2b3658;
+    --shadow:0 18px 40px rgba(0,0,0,.5);
+
+    --radius:16px;
+    --radius-sm:12px;
+    --maxw:1100px;
+  }
+
+  /* ===== Base ===== */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto,
+      "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    color:var(--fg);
+    /* 記事テンプレと同じ背景トーン */
+    background:linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    background-attachment:fixed; /* 帯防止 */
+    line-height:1.7; letter-spacing:.2px;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ===== Header ===== */
+  .header{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(180deg, rgba(10,10,22,.75), rgba(10,10,22,.4));
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{
+    max-width:var(--maxw); margin:0 auto; padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{font-weight:900; letter-spacing:1px; font-size:22px; color:var(--accent-warm)}
+  .menu{display:flex; gap:18px; align-items:center}
+
+  /* 通常リンク（Contactは除外） */
+  .menu a:not(.cta){
+    color:var(--fg); opacity:.9; position:relative;
+    transition:opacity .2s ease, color .2s ease;
+  }
+  .menu a:not(.cta)::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px;
+    background: radial-gradient(8px 6px at 50% 50%, var(--accent), transparent);
+    opacity:0; transition: opacity .25s ease;
+  }
+  .menu a:not(.cta):hover{ color:var(--accent); opacity:1 }
+  .menu a:not(.cta):hover::after{ opacity:.9 }
+
+  /* Contact（白文字固定／オレンジ） */
+  @keyframes btnPulse{
+    0%,100%{ box-shadow:0 0 8px color-mix(in oklab, currentColor 28%, transparent) }
+    50%{     box-shadow:0 0 14px color-mix(in oklab, currentColor 42%, transparent) }
+  }
+  .cta{
+    --cta: var(--accent-warm);
+    padding:8px 14px; border-radius:999px; font-weight:700;
+    color:#fff;
+    background: color-mix(in oklab, var(--cta) 18%, transparent);
+    border:1px solid color-mix(in oklab, var(--cta) 70%, #ffffff 0%);
+    animation: btnPulse 7s ease-in-out infinite;
+    transition: filter .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .menu .cta, .menu .cta:visited, .menu .cta:hover, .menu .cta:focus, .menu .cta:active{
+    color:#fff !important; -webkit-text-fill-color:#fff; text-decoration:none;
+  }
+  .menu .cta::after{ content:none !important } /* 下線グローを除外 */
+  .cta:hover{ filter:brightness(1.08); border-color:color-mix(in oklab, var(--cta) 80%, #ffffff 0%) }
+
+  /* ===== Hero（背景はbodyに一体化、中央だけほのかな光） ===== */
   .hero{
-    will-change: opacity, transform;
-    transition: opacity .2s linear, transform .2s ease-out; /* スクロールがない時の見栄え */
+    position:relative; overflow:hidden; text-align:center;
+    max-width:var(--maxw); margin:0 auto; padding:120px 20px 60px;
+    background:none; /* 画像や別グラデを重ねない＝帯がでない */
+    will-change:opacity, transform;
+    transition: opacity .2s linear, transform .2s ease-out;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:-1;
+    background: radial-gradient(800px 420px at 50% 45%, rgba(255,255,255,0.08) 0%, transparent 70%);
   }
 
-  /* モーション弱め希望の人には静止表示 */
-  @media (prefers-reduced-motion: reduce){
-    .hero{ transition: none !important; }
-  }
-
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body {
-  margin: 0;
-  font-family: Inter, "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto,
-    "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-  color: var(--fg);
-  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
-  background-attachment: fixed; /* ← グラデの伸びを安定させる */
-  line-height: 1.7;
-  letter-spacing: .2px;
-}
-
-/* Links */
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* Header */
-.header{
-  position:sticky; top:0; z-index:10;
-  backdrop-filter:blur(10px);
-  background:linear-gradient(180deg,rgba(10,10,22,.75),rgba(10,10,22,.4));
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.nav{max-width:var(--maxw);margin:0 auto;padding:14px 20px;
-  display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:900;letter-spacing:1px;font-size:22px;color:var(--accent-warm)}
-.menu{display:flex;gap:18px;align-items:center}
-.menu a{color:var(--fg);opacity:.9}
-.menu a:hover{color:var(--accent);opacity:1}
-.cta{padding:8px 14px;background:var(--accent-warm);color:#1a0f1f;
-  border-radius:999px;font-weight:700}
-.cta:hover{filter:brightness(1.05)}
-
-/* Hero */
-/* ===== Hero（中央スポットライト＆大見出し） ===== */
-.hero{
-  position:relative; overflow:hidden; text-align:center;
-  max-width: var(--maxw); margin: 0 auto;
-  padding: 96px 20px 48px;
-  background:
-    radial-gradient(800px 420px at 50% 45%, rgba(255,255,255,0.08) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(26,15,31,0.55), rgba(15,27,46,0.85)),
-    url("/assets/images/hero-road.jpg") center/cover no-repeat;
-}
-
-/* 画面幅限界まで大きい「ZAKKI」 */
-.hero h1{
-  margin: 0 0 10px;
-  font-weight: 900;
-  letter-spacing: .6px;
-  /* 画面幅ベースで最大化（1行想定） */
-  font-size: min(18vw, 12rem);
-  line-height: .9;
-  color: var(--accent-warm); /* ビビッドオレンジ */
-  text-shadow:
-    0 3px 0 rgba(0,0,0,.45),
-    0 0 28px rgba(255,166,43,.32);
-  white-space: nowrap; /* 改行させない */
-}
-
-/* Heroの説明テキストは非表示（HTMLから削除でもOK） */
-.hero p{ display:none; }
-
-/* ===== カテゴリチップ（項目ごとに色分け） ===== */
-.chips{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px}
-
-.chip{
-  padding:8px 12px; border-radius:999px; font-size:14px;
-  border:1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.05);
-  color: var(--fg);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.chip:hover{ transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.25); }
-
-/* 個別カラー（最初の提案色に寄せて調整） */
-.chip[data-t="research"]{
-  background: rgba(126,166,224,0.15); border-color:#5f8ec4; color:#eaf2ff;
-}
-.chip[data-t="creative"]{
-  background: rgba(242,166,90,0.16); border-color:#c78949; color:#fff1e4;
-}
-.chip[data-t="bridge"]{
-  background: rgba(159,211,199,0.14); border-color:#76b6a7; color:#eafff8;
-}
-.chip[data-t="career"]{
-  background: rgba(200,161,255,0.16); border-color:#a382db; color:#f5ebff;
-}
-.chip[data-t="misc"]{
-  background: rgba(167,191,220,0.16); border-color:#7e97b2; color:#e9f1ff;
-}
-
-/* ===== 背景の“切れ目”対策（ページ全体） ===== */
-body {
-  margin: 0;
-  color: var(--fg);
-  background: linear-gradient(180deg, #1a0f1f 0%, #0f1b2e 100%);
-  background-attachment: fixed;
-}
-
-.hero {
-  position: relative;
-  text-align: center;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 120px 20px 60px;
-  /* 👇 hero独自の背景は削除または透明化 */
-  background: none;
-}
-
-
-/* Section blocks */
-.section{max-width:var(--maxw);margin:0 auto;padding:48px 20px}
-.section h2{
-  font-size:24px;letter-spacing:.6px;font-weight:700;
-  margin:0 0 18px;color:var(--accent)
-}
-.muted{color:var(--muted);font-size:14px}
-
-/* Cards */
-.grid{display:grid;gap:22px}
-@media (min-width:760px){.grid{grid-template-columns:repeat(3,1fr)}}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
-  display:flex;flex-direction:column;gap:10px;
-  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
-}
-.card:hover{
-  transform:translateY(-3px);
-  border-color:rgba(24,224,255,.6);
-  box-shadow:0 12px 40px rgba(24,224,255,.18),var(--shadow);
-}
-.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;opacity:.9}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.date{font-size:12px;color:var(--muted)}
-.title{font-weight:700;font-size:18px;line-height:1.35}
-.excerpt{color:#d2daf2;font-size:14px}
-.readmore{margin-top:auto;font-weight:600;color:var(--accent)}
-
-/* Categories */
-.catwrap{display:grid;gap:18px}
-@media (min-width:900px){.catwrap{grid-template-columns:repeat(5,1fr)}}
-.cat{
-  background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));
-  border:1px dashed rgba(255,255,255,0.18);
-  border-radius:var(--radius-sm);
-  padding:14px;min-height:148px;
-  display:flex;flex-direction:column;gap:8px;
-}
-.cat h3{margin:0;font-size:16px;color:var(--accent-warm)}
-.cat p{margin:0;font-size:13px;color:var(--muted)}
-.cat a{font-size:13px;font-weight:600;color:var(--accent)}
-
-/* About */
-.about{display:grid;gap:22px;align-items:center}
-@media (min-width:860px){.about{grid-template-columns:160px 1fr}}
-.avatar{
-  width:120px;height:120px;border-radius:999px;
-  background:linear-gradient(135deg,#18e0ff,#0f1b2e);
-  border:2px solid rgba(255,255,255,0.2);
-  box-shadow:var(--shadow);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:28px;letter-spacing:1px;
-}
-.socials{display:flex;gap:12px;margin-top:8px}
-.socials a{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--accent)}
-.socials a:hover{color:var(--accent-warm)}
-
-/* Footer */
-footer{
-  margin-top:40px;
-  border-top:1px solid rgba(255,255,255,0.08);
-  background:linear-gradient(180deg,rgba(10,10,22,.8),rgba(10,10,22,.4));
-}
-.foot{
-  max-width:var(--maxw);margin:0 auto;padding:26px 20px;
-  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-  justify-content:space-between;color:var(--muted)
-}
-.top{
-  position:fixed;right:18px;bottom:18px;
-  background:var(--accent);
-  color:#0f1b2e;
-  padding:10px 14px;
-  border-radius:999px;
-  font-weight:800;
-  box-shadow:var(--shadow)
-}
-
-/* ===== ゆっくり呼吸する控えめネオンチップ ===== */
-.chips {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 24px;
-}
-
-/* ベース共通 */
-.chip {
-  position: relative;
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 600;
-  background: rgba(255,255,255,0.04);
-  cursor: default;
-  transition: color .3s ease, border-color .3s ease;
-  animation: softPulse 6s ease-in-out infinite;
-}
-
-/* 呼吸アニメーション：ゆっくり輝度を上下 */
-@keyframes softPulse {
-  0%, 100% {
-    filter: brightness(1) saturate(1);
-  }
-  50% {
-    filter: brightness(1.25) saturate(1.2);
-  }
-}
-
-/* 各カテゴリー色（完全一致で統一） */
-.chip[data-t="research"] {
-  color: #8bb6ff;
-  border: 1px solid #8bb6ff;
-  box-shadow: 0 0 10px rgba(139,182,255,0.25);
-  text-shadow: 0 0 8px rgba(139,182,255,0.3);
-}
-
-.chip[data-t="creative"] {
-  color: #f2a65a;
-  border: 1px solid #f2a65a;
-  box-shadow: 0 0 10px rgba(242,166,90,0.25);
-  text-shadow: 0 0 8px rgba(242,166,90,0.3);
-}
-
-.chip[data-t="bridge"] {
-  color: #9fd3c7;
-  border: 1px solid #9fd3c7;
-  box-shadow: 0 0 10px rgba(159,211,199,0.25);
-  text-shadow: 0 0 8px rgba(159,211,199,0.3);
-}
-
-.chip[data-t="career"] {
-  color: #c8a1ff;
-  border: 1px solid #c8a1ff;
-  box-shadow: 0 0 10px rgba(200,161,255,0.25);
-  text-shadow: 0 0 8px rgba(200,161,255,0.3);
-}
-
-.chip[data-t="misc"] {
-  color: #a7bfdc;
-  border: 1px solid #a7bfdc;
-  box-shadow: 0 0 10px rgba(167,191,220,0.25);
-  text-shadow: 0 0 8px rgba(167,191,220,0.3);
-}
-
-/* Hover時：少しだけ明るく（浮かない） */
-.chip:hover {
-  filter: brightness(1.3);
-}
-
-/* ====== MENU（ヘッダの目次リンク）====== */
-.menu a{
-  position: relative;
-  color: var(--fg);
-  opacity: .9;
-  transition: opacity .2s ease, color .2s ease;
-}
-.menu a::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-4px; height:2px;
-  background: radial-gradient(8px 6px at 50% 50%, var(--accent), transparent);
-  opacity:0; transition: opacity .25s ease;
-}
-.menu a:hover{ color: var(--accent); opacity:1 }
-.menu a:hover::after{ opacity:.9 }
-
-/* ====== Contact（右上ボタン）====== */
-.cta{
-  --cta: var(--accent-warm, #ffa62b);
-  padding:8px 14px;
-  background: color-mix(in oklab, var(--cta) 18%, transparent);
-  color:#fff; /* ← 白文字に固定 */
-  border:1px solid color-mix(in oklab, var(--cta) 70%, #ffffff 0%);
-  border-radius:999px; font-weight:700;
-  box-shadow: 0 0 10px color-mix(in oklab, var(--cta) 35%, transparent);
-  transition: filter .25s ease, box-shadow .25s ease, border-color .25s ease;
-  animation: btnPulse 7s ease-in-out infinite;
-}
-/* === Topボタンの修正版 === */
-.top{
-  --top: var(--accent, #fff);
-  background: color-mix(in oklab, var(--top) 18%, #0f1b2e);
-  color:#fff; /* ← 白文字に変更 */
-  border:1px solid color-mix(in oklab, var(--top) 70%, #ffffff 0%);
-  box-shadow: 0 0 10px color-mix(in oklab, var(--top) 35%, transparent);
-  transition: filter .25s ease, box-shadow .25s ease, border-color .25s ease;
-  animation: btnPulseTop 8s ease-in-out infinite;
-}
-/* hover時も白文字を維持 */
-.top:hover{
-  color:#fff;
-  filter: brightness(1.1);
-}
-
-/* ====== セクション見出し（Latest / Categories / About）====== */
-.section h2{
-  color: var(--accent);
-  position: relative;
-  padding-bottom: 4px;
-}
-.section h2::after{
-  content:"";
-  position:absolute; left:0; bottom:-6px;
-  width:72px; height:3px; border-radius:3px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 40%, transparent);
-  opacity:.85;
-}
-
-/* ====== 記事カードの「続きを読む」リンクをネオン寄りに ====== */
-.readmore{
-  color: var(--accent);
-  text-decoration: none;
-  position: relative;
-}
-.readmore::after{
-  content:"";
-  position:absolute; left:0; bottom:-2px; right:0; height:1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  opacity:.35; transition: opacity .25s ease;
-}
-.readmore:hover::after{ opacity:.85 }
-
-/* ====== SNS/ソーシャル小リンクも統一トーン ====== */
-.socials a{
-  color: var(--accent);
-  text-shadow: 0 0 6px color-mix(in oklab, var(--accent) 25%, transparent);
-  transition: text-shadow .25s ease, color .25s ease;
-}
-.socials a:hover{
-  color: var(--accent-warm);
-  text-shadow: 0 0 8px color-mix(in oklab, var(--accent-warm) 30%, transparent);
-}
-
-/* ====== “Latest...の目次”＝ヘッダの3リンクを少しゆっくり発光 ====== */
-.header .menu a{
-  animation: navGlow 9s ease-in-out infinite;
-}
-@keyframes navGlow{
-  0%,100%{ text-shadow: 0 0 3px rgba(24,224,255,.15) }
-  50%    { text-shadow: 0 0 8px rgba(24,224,255,.28) }
-}
-
-/* アニメ控えめ設定に配慮 */
-@media (prefers-reduced-motion: reduce){
-  .cta, .top, .header .menu a{ animation: none !important; }
-}
-
-/* 1) メニューの通常リンクだけをホバー変色にする（Contactは除外） */
-.menu a:not(.cta){ color: var(--fg); opacity: .9; }
-.menu a:not(.cta):hover{ color: var(--accent); opacity: 1; }
-
-/* 2) Contactは常に白文字（visited/hover/focus/activeも固定） */
-.menu .cta,
-.menu .cta:visited,
-.menu .cta:hover,
-.menu .cta:focus,
-.menu .cta:active{
-  color: #fff !important;
-  -webkit-text-fill-color: #fff; /* Safari保険 */
-  text-decoration: none;
-}
-
-/* 3) メニュー共通の下線グローをContactには出さない */
-.menu .cta::after{ content: none !important; }
-
-/* === Heroタイトル専用フォント === */
-.hero h1{
-  font-family: 'Orbitron', sans-serif;
-  font-size: min(18vw, 12rem);
-  letter-spacing: 0.06em;
-  line-height: .9;
-  color: var(--accent-warm);
-  /* 厚みを出す影を重ねる */
-  text-shadow:
-    0 0 4px rgba(255,166,43,0.7),
-    0 0 15px rgba(255,166,43,0.5),
-    0 0 40px rgba(255,166,43,0.25),
-    0 3px 0 rgba(0,0,0,0.45);
-  white-space: nowrap;
-  animation: titleGlow 9s ease-in-out infinite;
-}
-
-@keyframes titleGlow {
-  0%,100% {
+  /* 画面幅限界まで大きい「ZAKKI」 */
+  .hero h1{
+    margin:0 0 10px; font-family:'Orbitron', sans-serif;
+    font-size:min(18vw, 12rem); line-height:.9; letter-spacing:.06em; white-space:nowrap;
+    color:var(--accent-warm);
     text-shadow:
       0 0 4px rgba(255,166,43,0.7),
       0 0 15px rgba(255,166,43,0.5),
       0 0 40px rgba(255,166,43,0.25),
       0 3px 0 rgba(0,0,0,0.45);
+    animation: titleGlow 9s ease-in-out infinite;
   }
-  50% {
-    text-shadow:
-      0 0 10px rgba(255,166,43,0.8),
-      0 0 25px rgba(255,166,43,0.6),
-      0 0 60px rgba(255,166,43,0.35),
-      0 3px 0 rgba(0,0,0,0.45);
+  @keyframes titleGlow{
+    0%,100%{
+      text-shadow:
+        0 0 4px rgba(255,166,43,0.7),
+        0 0 15px rgba(255,166,43,0.5),
+        0 0 40px rgba(255,166,43,0.25),
+        0 3px 0 rgba(0,0,0,0.45);
+    }
+    50%{
+      text-shadow:
+        0 0 10px rgba(255,166,43,0.8),
+        0 0 25px rgba(255,166,43,0.6),
+        0 0 60px rgba(255,166,43,0.35),
+        0 3px 0 rgba(0,0,0,0.45);
+    }
   }
-}
 
-.hero h2{
-  margin-top: 8px;
-  font-family: 'Inter', 'Noto Sans JP', sans-serif; /* 無機質で細め */
-  font-weight: 400;  /* 細く、軽やかに */
-  font-size: min(4vw, 1.5rem);
-  letter-spacing: 0.05em; /* やや広めで清潔感 */
-  color: var(--muted);    /* 淡いブルーグレー */
-  text-shadow: none;      /* グローを排除してシャープに */
-  opacity: 0.9;
-}
+  /* サブタイトルはシャープに */
+  .hero h2{
+    margin-top:8px;
+    font-family:'Inter','Noto Sans JP',sans-serif;
+    font-weight:400;
+    font-size:min(4vw, 1.5rem);
+    letter-spacing:.05em;
+    color:var(--muted);
+    text-shadow:none; opacity:.9;
+  }
 
+  /* ===== Chips（5カテゴリー：淡い呼吸グロー） ===== */
+  .chips{ display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:24px }
+  .chip{
+    position:relative; padding:8px 16px; border-radius:999px;
+    font-size:15px; font-weight:600; background:rgba(255,255,255,0.04);
+    cursor:default; transition: color .3s ease, border-color .3s ease, filter .25s ease, box-shadow .25s ease;
+    animation: btnPulse 7s ease-in-out infinite;
+    border:1px solid currentColor; color:currentColor;
+  }
+  .chip[data-t="research"]{ color:#8bb6ff; box-shadow:0 0 8px color-mix(in oklab, currentColor 30%, transparent) }
+  .chip[data-t="creative"]{ color:#f2a65a; box-shadow:0 0 8px color-mix(in oklab, currentColor 30%, transparent) }
+  .chip[data-t="bridge"]  { color:#9fd3c7; box-shadow:0 0 8px color-mix(in oklab, currentColor 30%, transparent) }
+  .chip[data-t="career"]  { color:#c8a1ff; box-shadow:0 0 8px color-mix(in oklab, currentColor 30%, transparent) }
+  .chip[data-t="misc"]    { color:#a7bfdc; box-shadow:0 0 8px color-mix(in oklab, currentColor 30%, transparent) }
+  .chip:hover{ filter:brightness(1.06); box-shadow:0 0 12px color-mix(in oklab, currentColor 45%, transparent) }
 
+  /* ===== Sections / Headings ===== */
+  .section{max-width:var(--maxw); margin:0 auto; padding:48px 20px}
+  .section h2{
+    font-size:24px; letter-spacing:.6px; font-weight:700;
+    margin:0 0 18px; color:var(--accent); position:relative; padding-bottom:4px;
+  }
+  .section h2::after{
+    content:""; position:absolute; left:0; bottom:-6px; width:72px; height:3px; border-radius:3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 40%, transparent);
+    opacity:.85;
+  }
+  .muted{ color:var(--muted); font-size:14px }
 
-</style>
+  /* ===== Cards ===== */
+  .grid{display:grid; gap:22px}
+  @media (min-width:760px){ .grid{ grid-template-columns:repeat(3,1fr) } }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+    display:flex; flex-direction:column; gap:10px;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(24,224,255,.6);
+    box-shadow:0 12px 40px rgba(24,224,255,.18), var(--shadow);
+  }
+  .badge{display:inline-flex; align-items:center; gap:6px; font-size:12px; opacity:.9}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--accent)}
+  .date{font-size:12px; color:var(--muted)}
+  .title{font-weight:700; font-size:18px; line-height:1.35}
+  .excerpt{color:#d2daf2; font-size:14px}
+  .readmore{margin-top:auto; font-weight:600; color:var(--accent); position:relative; text-decoration:none}
+  .readmore::after{
+    content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px;
+    background:linear-gradient(90deg, var(--accent), transparent);
+    opacity:.35; transition:opacity .25s ease;
+  }
+  .readmore:hover::after{ opacity:.85 }
+
+  /* ===== Categories ===== */
+  .catwrap{display:grid; gap:18px}
+  @media (min-width:900px){ .catwrap{ grid-template-columns:repeat(5,1fr) } }
+  .cat{
+    background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border:1px dashed rgba(255,255,255,0.18);
+    border-radius:var(--radius-sm);
+    padding:14px; min-height:148px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .cat h3{ margin:0; font-size:16px; color:var(--accent-warm) }
+  .cat p{ margin:0; font-size:13px; color:var(--muted) }
+  .cat a{ font-size:13px; font-weight:600; color:var(--accent) }
+
+  /* ===== About ===== */
+  .about{display:grid; gap:22px; align-items:center}
+  @media (min-width:860px){ .about{ grid-template-columns:160px 1fr } }
+  .avatar{
+    width:120px; height:120px; border-radius:999px;
+    background:linear-gradient(135deg, #18e0ff, #0f1b2e);
+    border:2px solid rgba(255,255,255,0.2);
+    box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:28px; letter-spacing:1px;
+  }
+  .socials{ display:flex; gap:12px; margin-top:8px }
+  .socials a{
+    display:inline-flex; align-items:center; gap:6px; font-size:14px;
+    color:var(--accent);
+    text-shadow:0 0 6px color-mix(in oklab, var(--accent) 25%, transparent);
+    transition:text-shadow .25s ease, color .25s ease;
+  }
+  .socials a:hover{
+    color:var(--accent-warm);
+    text-shadow:0 0 8px color-mix(in oklab, var(--accent-warm) 30%, transparent);
+  }
+
+  /* ===== Footer / Top ===== */
+  footer{
+    margin-top:40px;
+    border-top:1px solid rgba(255,255,255,0.08);
+    background:linear-gradient(180deg, rgba(10,10,22,.8), rgba(10,10,22,.4));
+  }
+  .foot{
+    max-width:var(--maxw); margin:0 auto; padding:26px 20px;
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    color:var(--muted);
+  }
+
+  /* PageTop（白文字固定／シアン） */
+  .top{
+    --top: var(--accent);
+    position:fixed; right:18px; bottom:18px;
+    background: color-mix(in oklab, var(--top) 18%, #0f1b2e);
+    color:#fff;
+    padding:10px 14px; border-radius:999px; font-weight:800;
+    border:1px solid color-mix(in oklab, var(--top) 70%, #ffffff 0%);
+    animation: btnPulse 8s ease-in-out infinite;
+    box-shadow: 0 0 10px color-mix(in oklab, var(--top) 35%, transparent);
+    transition: filter .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .top:hover{ color:#fff; filter:brightness(1.1) }
+
+  /* ===== Nav links soft glow (optional) ===== */
+  .header .menu a{ animation: navGlow 9s ease-in-out infinite }
+  @keyframes navGlow{
+    0%,100%{ text-shadow: 0 0 3px rgba(24,224,255,.15) }
+    50%    { text-shadow: 0 0 8px rgba(24,224,255,.28) }
+  }
+
+  /* ===== Motion preference ===== */
+  @media (prefers-reduced-motion: reduce){
+    .hero, .cta, .top, .header .menu a, .chip{
+      animation:none !important; transition:none !important;
+    }
+  }
+  </style>
 </head>
-<!--フォントの指定-->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
 <body>
   <header class="header">
     <nav class="nav">
@@ -501,26 +322,7 @@ footer{
     <section class="section" id="latest">
       <h2>Latest Entries</h2>
       <div class="grid">
-        <!-- Sample cards (置き換え可) -->
-        <!--data-tには、research、career、bridge、creative、miscが入ります。-->>
-        
-        <!--
-        
-        <article class="card">
-          <div class="badge" data-t="research"><span class="dot"></span>研究 ・ 2025-10-12</div>
-          <div class="title">Network Diffusion Modelでみるパーキンソン病の萎縮進行</div>
-          <p class="excerpt">脳ネットワーク上での異常拡散を仮定し、領域間連結性を重み付けに使った縦断解析の覚え書き…</p>
-          <a class="readmore" href="template.html">続きを読む →</a>
-        </article>
-        
-        <article class="card">
-          <div class="badge" data-t="career"><span class="dot"></span>研究 ・ 2025-10-16</div>
-          <div class="title">SuStaInの導入手順</div>
-          <p class="excerpt">Githubに公開されているpySuStaInのインストールから実装まで(underconstruction)</p>
-          <a class="readmore" href="#">続きを読む →</a>
-        </article>
-
-        -->
+        <!-- Sample cards -->
         <article class="card">
           <div class="badge" data-t="misc"><span class="dot"></span>雑記 ・ 2025-10-16</div>
           <div class="title">自己紹介</div>
@@ -588,50 +390,48 @@ footer{
   </footer>
 
   <a class="top" href="#hero" aria-label="ページ上部へ">↑ Top</a>
-<script>
-(function(){
-  const hero = document.querySelector('.hero');
-  const header = document.querySelector('.header');
-  if(!hero) return;
 
-  // ユーザーが「動きを減らす」設定ならエフェクト無効
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){ hero.style.opacity = 1; hero.style.transform = 'none'; return; }
+  <!-- Scroll fade for hero -->
+  <script>
+  (function(){
+    const hero = document.querySelector('.hero');
+    const header = document.querySelector('.header');
+    if(!hero) return;
 
-  let ticking = false;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ hero.style.opacity = 1; hero.style.transform = 'none'; return; }
 
-  function update(){
-    const y = window.scrollY || window.pageYOffset;
-    const h = hero.offsetHeight || 1;
-    // heroの高さ分のスクロールに合わせて 1 → 0.4 へフェード
-    const p = Math.min(Math.max(y / h, 0), 1);          // 0..1
-    const opacity = 1 - p * 0.6;                        // 1 → 0.4
-    const translate = p * 24;                            // 0 → 24px
+    let ticking = false;
 
-    hero.style.opacity = opacity.toFixed(3);
-    hero.style.transform = `translateY(${translate}px)`;
+    function update(){
+      const y = window.scrollY || window.pageYOffset;
+      const h = hero.offsetHeight || 1;
+      const p = Math.min(Math.max(y / h, 0), 1);   // 0..1
+      const opacity = 1 - p * 0.6;                 // 1 → 0.4
+      const translate = p * 24;                    // 0 → 24px
 
-    // スクロールが進むほどヘッダーを少しだけ濃く
-    if(header){
-      const top = 0.75 + p * 0.15;  // 0.75 → 0.90
-      const bot = 0.40 + p * 0.20;  // 0.40 → 0.60
-      header.style.background =
-        `linear-gradient(180deg, rgba(10,10,22,${top}), rgba(10,10,22,${bot}))`;
+      hero.style.opacity = opacity.toFixed(3);
+      hero.style.transform = `translateY(${translate}px)`;
+
+      if(header){
+        const top = 0.75 + p * 0.15;  // 0.75 → 0.90
+        const bot = 0.40 + p * 0.20;  // 0.40 → 0.60
+        header.style.background =
+          `linear-gradient(180deg, rgba(10,10,22,${top}), rgba(10,10,22,${bot}))`;
+      }
+      ticking = false;
     }
-    ticking = false;
-  }
 
-  function onScroll(){
-    if(!ticking){
-      ticking = true;
-      requestAnimationFrame(update);
+    function onScroll(){
+      if(!ticking){
+        ticking = true;
+        requestAnimationFrame(update);
+      }
     }
-  }
 
-  window.addEventListener('scroll', onScroll, {passive:true});
-  // 初期化
-  update();
-})();
-</script>
+    window.addEventListener('scroll', onScroll, {passive:true});
+    update();
+  })();
+  </script>
 </body>
 </html>
