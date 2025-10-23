@@ -5,7 +5,8 @@ from typing import List, Dict, Any, Optional
 
 import torch
 from torch.utils.data import Dataset, DataLoader
-from transformers import AutoTokenizer, AutoModelForCausalLM, AdamW, get_linear_schedule_with_warmup, LogitsProcessor
+from transformers import AutoTokenizer, AutoModelForCausalLM, get_linear_schedule_with_warmup, LogitsProcessor
+from torch.optim import AdamW
 
 # ---------------------------
 # 1) 体系化されたビッド集合
