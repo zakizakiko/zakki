@@ -1,41 +1,192 @@
-const POST = {
-  title: '自己紹介：ZAKI / zakizakiko',
-  description: '京都大学院で医用画像解析を研究しつつ、創作とブリッジを楽しむ人の自己紹介。',
-  url: window.location.href,
-  slug: 'about-zaki',
-  category: 'misc',
-  categoryLabel: '雑記',
-  date: '2025-10-18',
-  readingTime: '6',
-  subtitle: '研究 × 創作 × ブリッジ。夕暮れ色の思考ログへようこそ。',
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[[title]] — ZAKKI</title>
+  <meta name="description" content="[[description]]" />
+  <meta name="author" content="ZAKI" />
 
-  // Tags
-  tag1: '自己紹介',
-  tag2: 'はじめに',
+  <!-- OG/Twitter -->
+  <meta property="og:title" content="[[title]] — ZAKKI" />
+  <meta property="og:description" content="[[description]]" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="[[url]]" />
+  <meta property="og:site_name" content="ZAKKI" />
+  <meta property="og:image" content="[[ogImage]]" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="[[title]] — ZAKKI" />
+  <meta name="twitter:description" content="[[description]]" />
+  <meta name="twitter:image" content="[[ogImage]]" />
 
-  // 本文セクション
-  shortIntro: 'このブログの作者「ZAKI（ざき）」の自己紹介と、ここでやりたいことを書きます',
-  background: '京都大学大学院で神経変性疾患の医用画像解析（NDM/ESM/SuStaInまわり）を研究しています。数式とコードと図が好き。研究に向き合いながらも、創作やブリッジの“遊び”が思考を柔らかくしてくれると信じています。',
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/favicon.png" />
 
-  methodsIntro: 'このブログでは、研究ノート、創作（ゲーム・文章・UI/ロゴ）、ブリッジの戦術メモ、就活ログ、そして普通の雑記を、淡々と積み上げていきます。読みやすさ最優先で、1記事1テーマ主義。',
-  step1: '研究：医用画像・ネットワークモデルのメモ（NDM/ESM/SuStaIn、ENIGMA toolboxなど）',
-  step2: '創作：マダミス/RPGの構造設計、UIスケッチ、ロゴ草案、日々の試作',
-  step3: 'ブリッジ：U26女子代表としての気づき、システム/シグナル運用の覚え書き',
+  <style>
+    :root{
+      /* Neon Noire tone */
+      --bg-1:#1a0f1f; --bg-2:#0f1b2e;
+      --fg:#f5f7ff; --muted:#b6bcd3;
+      --accent:#18e0ff; --accent-warm:#ffa62b;
+      --card:rgba(18,20,36,0.78); --border:#2b3658;
+      --shadow:0 18px 40px rgba(0,0,0,.5);
+      --radius:16px; --maxw:860px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--fg);
+      font-family:Inter,"Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+      background:linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 100%);
+      background-attachment:fixed; line-height:1.85; letter-spacing:.2px;
+    }
+    a{color:var(--accent); text-decoration:none} a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
 
-  findings: '“わかったことを言語化する”より、“わからないをきれいに切り出す”ほうが進みます。記事では意図的に仮説と限界を分けて書きます。',
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:10; backdrop-filter:blur(10px);
+      background:linear-gradient(180deg, rgba(10,10,22,.75), rgba(10,10,22,.4));
+      border-bottom:1px solid rgba(255,255,255,.08)
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{font-family:'Audiowide',sans-serif; letter-spacing:.06em; font-size:20px}
+    .crumbs{font-size:13px; color:var(--muted)}
+    .crumbs a{color:var(--muted)}
 
-  imageUrl: '/assets/images/about-zaki.jpg',
-  imageAlt: 'ZAKIのイメージ写真（夕暮れの青）',
-  imageCaption: '夕方のやや青に、日々の発見を。',
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; padding:28px 0 8px;
+    }
+    .hero::before{
+      content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+      background:radial-gradient(800px 420px at 50% 35%, rgba(255,255,255,.08) 0%, transparent 70%);
+    }
+    .title{
+      margin:12px 0 6px;
+      font-family:'Audiowide',sans-serif; font-weight:400;
+      font-size:clamp(28px, 6.5vw, 56px);
+      letter-spacing:.06em; line-height:1.05;
+      color:var(--accent-warm);
+      text-shadow:0 0 22px rgba(255,166,43,.28), 0 3px 0 rgba(0,0,0,.45);
+    }
+    .subtitle{
+      margin:6px 0 0; color:var(--muted);
+      font-weight:400; font-size:clamp(14px, 2.6vw, 16px); letter-spacing:.05em;
+    }
+    .meta{display:flex; gap:12px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:13px; margin-top:10px}
 
-  summary1: '専門：神経変性疾患の医用画像解析（ネットワーク拡散モデルなど）',
-  summary2: '好き：構造化・可視化・UI、テキストの小さな設計',
-  summary3: '趣味：コントラクトブリッジ、ゲーム、料理、散歩',
+    /* Article (simple) */
+    article{
+      background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:22px; margin:18px 0 28px;
+    }
+    article h2{font-size:22px; margin:18px 0 8px; color:#eaf1ff; font-weight:600}
+    article p{margin:.8em 0}
+    ul{padding-left:1.2em}
+    .callout{
+      margin:16px 0; padding:12px 14px; border-radius:12px;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.15);
+    }
 
-  related1: '初めての方へ：このブログの歩き方',
-  related1url: '/article/how-to-read.html',
+    footer{margin:22px 0 40px; color:var(--muted); font-size:13px; text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><a href="/" style="color:var(--fg); text-decoration:none">ZAKKI</a></div>
+      <nav class="crumbs">
+        <a href="/">Home</a> ／ <span>[[title]]</span>
+      </nav>
+    </div>
+  </header>
 
-  caution: '研究メモは個人の実験ノート的性質が強く、誤りや未検証が含まれる可能性があります。',
-  assetUrl: '/assets/files/profile-card.pdf',
-  assetName: 'プロフィール（PDF）'
-};
+  <main class="wrap">
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="title">[[title]]</h1>
+      <p class="subtitle">[[subtitle]]</p>
+      <div class="meta">
+        <span>🗓 [[date]]</span>
+        <span>·</span>
+        <span>⏱ 読了目安：[[readingTime]]分</span>
+      </div>
+    </section>
+
+    <!-- Body -->
+    <article id="post">
+      <h2>わたしについて</h2>
+      <p>[[aboutMe]]</p>
+
+      <h2>今やっていること</h2>
+      <ul>
+        <li>研究：[[research]]</li>
+        <li>創作：[[creative]]</li>
+        <li>ブリッジ：[[bridge]]</li>
+      </ul>
+
+      <h2>このブログで書くこと</h2>
+      <p>[[blogScope]]</p>
+
+      <div class="callout">
+        📮 連絡先：<a href="[[contactUrl]]">[[contactLabel]]</a> ／
+        X：<a href="[[xUrl]]">@[[xHandle]]</a> ／
+        GitHub：<a href="[[githubUrl]]">[[githubUser]]</a>
+      </div>
+    </article>
+
+    <footer>
+      <p>© 2025 ZAKKI — <a href="/">トップへ戻る</a></p>
+    </footer>
+  </main>
+
+  <script>
+    // ---- 最小限のデータ（必要に応じて書き換え） ----
+    const POST = {
+      title: '自己紹介',
+      description: '京都大学院で医用画像解析に取り組むZAKIの自己紹介。',
+      url: window.location.href,
+      ogImage: '/ogimages/about-zaki.png',
+      date: '2025-10-18',
+      readingTime: '3',
+      subtitle: 'はじめまして。zakizakikoです。',
+
+      aboutMe: '初めまして。zakizakikoです。京都大学',
+
+      research: 'NDM/ESM/SuStaIn まわりの実験メモ、ENIGMA toolbox の可視化など。',
+      creative: 'マーダーミステリー/RPGの構造設計メモ、UIスケッチ、ロゴの試作。',
+      bridge: 'U26女子代表での気づき、システム合意の更新、失敗パターンの整理。',
+
+      blogScope: '研究ログ／創作ノート／ブリッジ戦術／就活メモ／普通の雑記。1記事1テーマで、5〜10分で読めるサイズを目安にします。',
+
+      contactUrl: '/#contact', contactLabel: 'Contact',
+      xUrl: 'https://x.com/your_id', xHandle: 'your_id',
+      githubUrl: 'https://github.com/your_id', githubUser: 'your_id'
+    };
+
+    // ---- [[...]] の置換 ----
+    (function replacePlaceholders(root=document){
+      const re = /\[\[(\w+)\]\]/g;
+
+      // テキストノード
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+      const texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      texts.forEach(node => { node.nodeValue = node.nodeValue.replace(re, (_, k) => POST[k] ?? ''); });
+
+      // head内のmeta/linkの content/href
+      document.querySelectorAll('meta, link').forEach(el => {
+        for (const attr of ['content','href']){
+          if(el.hasAttribute(attr)){
+            el.setAttribute(attr, el.getAttribute(attr).replace(re, (_,k)=> POST[k] ?? ''));
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
